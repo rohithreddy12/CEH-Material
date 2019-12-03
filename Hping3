@@ -1,0 +1,49 @@
+Hping3
+
+- It is a command line tooll for network scanning and packet crafting fort TCP/IP protocol
+- It can be used for network scanning auditing, firewall testing,remote OS fingerprinting,TCP/IP stacks auditing
+
+
+hping3 host <options>
+
+Hping3 -c 5 -1 192.168.1.1
+
+-c = number of packets you ar3e sending to target
+
+packets:
+
+By default it will send TCP packets
+-1 : ICMP (hping3 -1 10.0.2.2)
+-2 : UDP  (hping3 -2 10.2.2.2 -p 80)
+-8 : Scan
+-9 : Listen (hping3 -9 HTTP -I eth0 --> intercept all trafiic containing http signature)
+-a : Spoof
+--rand-dest : random destination address mode (hping3 -1 10.0.1.x --rand-dest -I eth0 --> scan entire subnet for live host)
+--rand-source : random source address mode
+-t : ttl 
+-f : Fragment packets
+-x : set more fragments
+-S : Syn (hping3 -8 50-60 -S 10.0.2.5 -V)
+-U : Urg
+-R : Reset
+-F : FIN (hping3 -F -P -U 10.2.5.6 -p 80)
+-A : Ack (hping3 -A 10.2.2.2 -p 80)
+-P :PSH
+-Q : collect initial sequence number (hping3 192.5.6.3 -Q -p 139 -s)
+Firewall and time stampings : hping3 -S 75.25.6.5 -p 80 --tcp-timestamp (many firewall drops packet if it dont have time stamp option so we will use this option to enable time stamping)
+
+Ex: hping3 192.1698.5.2 --udp --flood
+hping3 -A 192.168.5.2 -p 80
+hping3 -S 10.2.5.6 -a 10.56.52.2 -p 22 --flood
+
+options:
+-V : verbose mode
+-v : version
+I : interface (eth0)
+--flood : flood the target don't show output
+-n : numeric output 
+-D : Debugging mode
+-q : quiet
+--traceroute
+
+

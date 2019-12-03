@@ -1,0 +1,114 @@
+Nmap
+
+Nmap [Scan type] [options] [tragets]
+
+Target:
+Ipv4: 192.168.0.2 (32 bit)
+Ipv6: abdh:chdh::FF% (128 bit)
+host name: www.target.com
+ipaddress range: 192.168.0-255.0.255
+cidr: 192.168.0.0/16
+if you want to scan a list from text file use -iL (input list) syntax: nmap -iL filename.txt
+
+-iR : scan random hosts (nmap -iR 100)
+--exclude :it excludes list host (nmap --exclude 10.0.0.1)
+
+
+
+
+Target ports:
+
+If you won't specify the ports, by default it will scan 1,000 most popular ports
+
+-F :it will scan first 100 ports (fast scan)
+-p20-88 : you can specify port range to scan using this option
+-p20,21,23 : you can specify ports to scan using this option
+-pU:53,U:110,T20-445 : it will scan mix of tcp,udp ports
+-r scan linearly (it won't randomize the ports to scan (1,2,3....))
+-p- : it scan all ports except first and last port(1 - 65535)
+--top-ports 5 : it will scan the top 5 ports
+-p-65535 : nmap scan by leaving off first port(1 - 65535) 
+-p0- : leaving off last port (0 - 65535)
+ -PO : ip protocol ping
+--traceroute
+
+probing options:
+
+-Pn : no host discovery only port scan (assume all hosts are up)
+-PB : Default probe (TCP 80,445 and ICMP)
+-PS<Port list>: check whether targets are up by probing TCP ports
+-PE : use ICMP echo request
+-PP : use ICMP Time stamp request
+-PM: Use ICMP netmask Request
+-PR : ARp discovery on local network
+
+scan types :
+
+-sO : Protocol scan (It checks whether it supports IP protocols like TCP,UDP<IGMP etc  )(Ex: nmap -sO 192.168.0.1 --> response 1 open icmp,6 open tcp  )
+
+Any response from the host -------- open
+ICMP protocol unreachable error (type3 code 2 ) ......closed
+Other unreachable error ............Filtered
+No response received .............OPEN | Filtered
+
+
+-sn : probe only (no port scan only host discovery)
+-sS: Syn scan (stealth scan,half open scan)
+-sT : TCP connect scan (complete handshake)
+-sU : UDP scan (Any response -> open, no response -- Open|filtered,ICMP port unreachable type3 code 3 --> closed, other icmp -> filtered)
+-sI : Idle scan (IP ID number if it increases by 2 --> open, 1 ---> closed)
+-sF : Fin scan (Enable TCP FIN bit)
+-sN : Null scan(No bits enable flag header is 0)
+-sX : Xmas scan (Enable URG,PSH,FIN flags)
+for -sF,-sN,-sX : no response means (open|filtered), RST means closed, ICMP unreachable error means filetered
+-sA : it never determines the open(open|filtered) ports.It is used to map out firewall rulesets,determining whether they are statefull or not and which ports are filtered (TCP RST response: Unfiltered, No response : Filtered, ICMp unreachable: filtered)
+-sW : TCP window port scan (It examines the RST packet window size if it is non-zero valuse means open / if it have window size zero means closed)
+-sM : TCP Maimon port scan(probe FIN/ACK - RST packet should be generated in response of this probe but many BSD-derivd systems simply drop the packet if it is open)
+-sV : Version scan
+-O : OS detection
+--scanflags : set custom list of TCP using (URG,ACK,PSH,RST,SYN,FIN) in any order (it is advance scan by turning on more flags in the scan like SYN/FIN, in -sF turn on PSH flag Ex: nmap -sF --scanfalgs PSH , nmap -sS --scanfalgs SYNFIN -T4 ww.google.com)
+Because let us say firewall administrator may set with "drop any packets which have only SYN flag set" to evade this rule use SYNFIN because firewall won't drop SYN/ACK (which will generate the inresponse of outgoing connection)
+-b (FTP Bounce scan) : Ex:nmap -Pn -b ftp.yourwish.com google.com (use a vulnerable FTP connection to scan the target)
+
+Aggregrate timing options:
+
+-T0 (paranoid): very slow , used for IDS evasion
+-T1 (sneaky) : Quite slow, used for IDS evasion
+-T2 (polite) : slow downs to consume less bandwidth,it runs less than 10 times slower than default (T3)
+-T3 (Normal) : default, it is a dynamic timing model based on target response
+-T4 (Aggresive) : Fast scan ,overwhelm target
+-T5 (Insane) : Very aggresive
+
+Output formats:
+-oN (normat output) 
+-oG (Greppable output)
+-oX (XMl format output)
+-oA <basename> : Generate Nmap, grepable and XML output files using basename of files
+
+Misc options: 
+
+-n : disable reverse IP address lookup (no DNS resolution)
+-6 : IPV6 only
+-A : OS detection, version detection, script scanning, traceroute
+--reason : it will display why it thinks the port is open or closed, or filtered
+-f : framgement packets 
+--mtu : set your own offeset value
+-D : scan with decoys (put random ip address and include our ip) (-D 192.168.0.1,10.2.5.6)
+-S : spoof source address
+-g/--source port number : Use given port number
+-v : verbose (-vv greater effect of verbose)
+-d : debugging level
+-V : print versin number
+--scan-delay: adjust delay between probes
+
+
+
+
+
+
+
+
+
+
+
+

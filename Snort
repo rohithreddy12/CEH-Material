@@ -1,0 +1,69 @@
+Snort
+
+Snort have three modes: sniffer mode,packer logger mode, NIDS mode
+
+sniffer mode: It simply reads the packets off the netwrok and display in the console
+packet logger mode: logs the packet to disk
+NIDS mode : which performs detection and analysis on network traffic
+
+To start snort in packet sniffer mode: ./snort -v
+To start snort in Packet logger mode: ./snort -dev -1 ./log (to specify a network use ./snort -dev -1 ./log -h 192.1682.0/24)
+for binary mode logging use: ./snort -1 ./log -b 
+
+To start the snort in NIDS mode : ./snort -dev -1 ./log -h 192.168.0.1/24 -c snort.conf  (it will apply the rules from snort.conf)
+
+In NIDS mode there are different modes: 
+
+-A fast : for fast alert mode simply alert with timestamp,alert message,source and destinatio IP ports.(./snort -c snort.conf -A fast -h 192.168.0.2/24)
+
+To log packets in tcp dump format use: ./snort -b -A fast -c snort.conf
+
+To read pcap file : snort -r file.pcap
+
+If you place the snort in INline mode it will act as IPS: snort -Q config policy_mode:inline , for passive mode(IDS) : config policy_mode:tap
+
+By default order for the snort: PASS, Drop, Alert,Log
+
+alert tcp any any -> 192.168.2.0/24 111(content:"|00 01 86 a5|"; msg: "mounted access";)
+
+Rule action : alert
+rule protocol :tcp
+rule format direction: ->
+Rule ip address: 192.168.2.0/24
+rule port: 111
+alert message: "|00 01 86 a5|"; msg: "mounted access"
+
+Rule actions:
+Alert : Generate the alert using selected alert methos, and log the packet
+Log : Log the packet
+Pass : ignore the packet
+Drop : block and log the packet
+
+Protocols:
+TCP
+UDP
+ICMP
+
+Direction:
+
+<> used for Bidirection trafiic flow
+example: log !192.168.2.0/24 any <> 192.168.5.0/24 23
+
+-> one direction
+
+Port numbers:
+Range operator ":"
+
+log UDP any any -> 198.52.5.0/24 1:1024 ---> it logs traffic coming from any ip,port to the destination ports between 1 to 1024
+log TCP any any -> 192.168.2.0/24 :5000 --> it logs traffic from any port goint to ports less than or equal to 5000
+log tcp any :1024 -> 192.168.2.0/24 400: ---> log tcp traffic from the well known ports to the going to ports greater than or equal to 400
+
+
+! ---> port negotiation
+
+log tcp any any -> 192.168.2.0/24 !6000:6010  --- > logs an alert if it not in this port range
+
+
+Even we can specify multiple ip address by [192.168.3.5,192.158.65.5,192.168.2.0/24] 
+
+

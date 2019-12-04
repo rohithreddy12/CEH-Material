@@ -1,0 +1,31 @@
+POODLE
+Padding Oracle on Downgraded Legacy Encryption
+MiTM attack
+Exploits a fall back mechanism in TSL to SSL
+Can decrypt a single byte of an encrypted message by making up to 256 SSL 3.0 requests while eaves dropping on the connection
+
+
+HEARTBLEED
+OPENSSL vulnerability
+Allows an attacker to obtain about 64 KB worth of info from targets memory
+Found in openssl 1.0.1-1.0.1F, fixed in 1.0.1G
+Discovered in 2014
+
+
+FREAK
+Factoring Attack on RSA-EXPORT
+MiTM attack
+Forces downgrade of RSA key to a weaker length; attacker then attempts a brute force on shorter key
+Discovered in 2015
+
+
+SHELLSHOCK AKA BASHBUG
+Allows an attack to execute just about any bash command through a vulnerability
+Attacker defines ENV_Variable, after which commands/arguments are passed to the target
+Uses CGI to deliver the attack
+
+
+CCS Injection Vulnerability
+Discovered in 2014
+MiTM attack
+Attacker crafts specific handshake that forces OpenSSL to use a weaker keying method.

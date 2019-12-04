@@ -1,0 +1,39 @@
+Wireshark
+
+Monitoring the specific ports: tcp.port==23
+Specific adress: ip.addr==192.168.2.5
+both: ip.addr==192.168.5.5 && tcp.port==23
+tcp.port eq 25 or icmp
+
+Even we can add protocol: ip.src != 192.168.52 && ip.dst != 192.168.5.2 && sip
+
+Maskout some protocols: ! (arp or icmp or dns)
+
+tcp contians ceh (display all packets that contains word "ceh")
+
+tcp.flags.reset==1
+diplay all reset packets
+
+udp contains 33:27:58
+it sets a filter 
+for the HEX values of 0X33,0X27,0X58 at any offset
+
+http.request
+Displays all HTTP GET request
+
+if we use http.request.method == "POST" it display HTTP POST traffic
+
+we can use "and" , "or" operators 
+
+ip.src==192.168.5.2 or ip.dst==192.56.5.2 
+
+
+ip.src==192.168.5.0/24 and ip.dst==192.56.5.0/24
+
+.
+We can log packets of the remote machine as well by modifying and adding the interfaces (Capture -> options -> manage interfaces add remote ip,username and password)
+
+
+
+
+

@@ -1,0 +1,36 @@
+ICMP
+
+
+type 0 : Echo reply
+type 3 : Destination unreachable
+type 5 : Redirect
+type 8 : Echo
+type 9,10 : Router advertisement,solicitation
+type 11: time exceeded
+
+
+type 3: Destination unreachable
+
+code 0 : network unreachable
+code 1 : Host unreachable
+code 2 : Protocol unreachable
+code 3 : port unreachable
+code 4 : Fragmentation needed and DF set
+code 5 : Source route failed
+code 6 : destination network unknown
+code 7 : destination host unknown
+code 8 : Source host isolated
+code 9 : communication with destination network is adminitratively prohibited
+code 10 : communication with destination host is adminitratively prohibited
+code 13 : communication adminitratively prohibited
+
+
+HTTP status codes:
+
+1xx : Information response
+2XX : sucessfil
+3xx : redirection
+4xx : client error
+5xx : server error
+
+
